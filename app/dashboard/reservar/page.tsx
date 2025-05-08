@@ -39,7 +39,7 @@ import { cn, formatDate } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import {
   createAppointment,
-  getAvailableTimeSlots,
+  generateTimeSlots,
   getDoctorsBySpecialty,
   getSpecialties,
 } from "@/lib/actions";
@@ -106,7 +106,7 @@ export default function ReservarTurnoPage() {
     if (!doctorId) return;
 
     try {
-      const data = await getAvailableTimeSlots(doctorId, date);
+      const data = await generateTimeSlots(doctorId, date);
       setTimeSlots(data);
       form.setValue("timeSlot", "");
     } catch (error) {

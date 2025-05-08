@@ -55,12 +55,11 @@ export default function RegisterPage() {
         title: "Registro exitoso",
         description: "Tu cuenta ha sido creada correctamente",
       })
-
       router.push("/login")
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Error al registrarse",
-        description: "Ocurrió un error al crear tu cuenta. Intenta nuevamente.",
+        description: error.message || "Ocurrió un error al crear tu cuenta. Intenta nuevamente.",
         variant: "destructive",
       })
     } finally {
@@ -177,4 +176,3 @@ export default function RegisterPage() {
     </div>
   )
 }
-

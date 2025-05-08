@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  phone     String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  appointments Appointment[]
+  
+  @@map("users")
+}
+
+model Appointment {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+
+  medic     Medic   @relation(fields: [medicId], references: [id])
+  medicId   Int
+
+  hour    Hours  @relation(fields: [hourId], references: [id])
+  hourId  Int
+
+  date       DateTime // Fecha de la cita
+
+  status     String   @default("scheduled") // "scheduled", "cancelled", "completed"
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([medicId, date, hourId])             // Un médico no puede tener 2 turnos en el mismo horario
+  @@unique([userId, medicId, date, hourId])     // Usuario no puede duplicar turno con el mismo médico
+  @@unique([userId, date, hourId])               // Usuario no puede tener 2 turnos en el mismo horario
+  @@map("appointments")
+}
+
+
+model Medic {
+  id          Int           @id @default(autoincrement())
+  name      String
+  specialty String
+  appointments Appointment[]
+}
+
+model Hours {
+  id         Int       @id @default(autoincrement())
+  hour       String    // Ej: '09:00', '09:30', etc.
+  appointments Appointment[]
+}

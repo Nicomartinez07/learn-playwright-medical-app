@@ -42,7 +42,7 @@ export default function LoginPage() {
         title: "Inicio de sesión exitoso",
         description: "Has iniciado sesión correctamente",
       })
-
+  
       router.push("/dashboard")
     } catch (error) {
       toast({

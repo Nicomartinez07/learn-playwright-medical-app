@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// prisma/schema.prisma
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String        @unique
+  phone        String
+  password     String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+
+  @@map("users")
+}
+
+model Appointment {
+  id               Int       @id @default(autoincrement())
+  user             User      @relation(fields: [userId], references: [id])
+  userId           Int
+  doctorId         Int // ID del doctor (manejado en frontend)
+  doctorName       String // Nombre del doctor (opcional, para no tener que consultar siempre al front)
+  specialty        String // Especialidad (manejada en frontend)
+  date             DateTime // Fecha y hora de la cita
+  status           String    @default("scheduled") // scheduled, cancelled, completed
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  cancellationDate DateTime? // Fecha de cancelación si aplica
+
+  @@unique([userId, date]) // Un usuario no puede tener dos citas a la misma hora
+  @@map("appointments")
+}
