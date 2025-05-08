@@ -107,7 +107,7 @@ export default function ReservarTurnoPage() {
 
     try {
       const data = await generateTimeSlots(doctorId, date);
-      setTimeSlots(data);
+      setTimeSlots(data.map(({time}) => String(time)));
       form.setValue("timeSlot", "");
     } catch (error) {
       toast({
@@ -283,8 +283,8 @@ export default function ReservarTurnoPage() {
                       <SelectContent>
                         {timeSlots.length > 0 ? (
                           timeSlots.map((timeSlot) => (
-                            <SelectItem key={timeSlot.hours} value={timeSlot.hours}>
-                              {timeSlot.hours}
+                            <SelectItem key={timeSlot} value={timeSlot}>
+                              {timeSlot}
                             </SelectItem>
 
                           ))

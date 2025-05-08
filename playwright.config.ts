@@ -13,9 +13,9 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   // Global setup for all tests.
-  globalSetup: "./tests/utils/global.setup.ts",
+  globalSetup: "./tests/utils/globalSetUp.ts",
   // Global teardown for all tests.
-  globalTeardown: "./tests/utils/global.teardown.ts",
+  globalTeardown: "./tests/utils/globalTearDown.ts",
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -38,9 +38,9 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    { name: 'chromium' },
+    // { name: 'chromium' },
     { name: 'firefox', use: { headless: false } },
-    { name: 'webkit', use: { headless: false } }, // Deshabilitar si no es necesario
+    // { name: 'webkit', use: { headless: false } }, // Deshabilitar si no es necesario
   ],
   webServer: {
     command: 'npm run dev',
