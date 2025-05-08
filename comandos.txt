@@ -1,3 +1,5 @@
+Crear .env en el cual poner: DATABASE_URL="file:./dev.db"
+
 npm install 
 npx prisma migrate dev --name init
 npm install @prisma/client bcryptjs

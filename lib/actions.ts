@@ -117,17 +117,17 @@ export async function getDoctorsBySpecialty(specialtyId: string) {
     .join(' ');
 
   const doctors = await prisma.medic.findMany({
-    where: { 
+    where: {
       specialty: {
-        equals: specialtyName,
-        mode: 'insensitive'
+        contains: "Cardiologa",
       }
     },
+    
     select: {
       id: true,
       name: true,
       specialty: true
-    }
+    },
   });
 
   return doctors.map((d: { id: { toString: () => any; }; name: any; specialty: string; }) => ({
@@ -273,13 +273,12 @@ export async function getUserAppointments() {
         medic: true,
         hour: true
       },
-      orderBy: { 
-        date: 'asc',
-        hour: {
-          hour: 'asc'
-        }
-      }
+      orderBy: [
+        { date: "asc" },
+        { hour: { hour: "asc" } }
+      ]
     });
+    
 
     return appointments.map((a: { id: { toString: () => any; }; medic: { name: any; specialty: any; }; date: any; hour: { hour: any; }; status: any; }) => ({
       id: a.id.toString(),

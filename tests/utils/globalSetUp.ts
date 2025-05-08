@@ -1,29 +1,40 @@
 import {prisma } from "@/lib/prisma";
 
-async function globalTeardown() {
+async function globalSetup() {
   try {
     console.log("Cleaning up test database...");
     // Delete all test data from the database
+    
+    await prisma.user.createMany({
+      data: [{
+        name: "Juan Perez",
+        email: "example@gmail.com",
+        phone: "11 12345678",
+        password: "12345678",
+      },
+    ]
+    });
+
     await prisma.medic.createMany({
       data: [{
         name: "Juan Perez",
-        speciallity: "Pediatra",
+        specialty: "Pediatra",
       },
       {
         name: "Julia Lopez",
-        speciallity: "Cardiologa",
+        specialty: "Cardiologa",
       },
       {
         name: "Maria Garcia",
-        speciallity: "Dermatologa",
+        specialty: "Dermatologa",
       },
       {
         name: "Victor Martinez",
-        speciallity: "Ginecologo",
+        specialty: "Ginecologo",
       }
     ]
     });
-    await prisma.hour.createMany({
+    await prisma.hours.createMany({
       data: [{
         hour: "09:00",
       },{
@@ -49,4 +60,4 @@ async function globalTeardown() {
   }
 }
 
-export default globalTeardown;
+export default globalSetup;

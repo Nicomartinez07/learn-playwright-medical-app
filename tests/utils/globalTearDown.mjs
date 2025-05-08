@@ -1,6 +1,7 @@
-import {prisma } from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
 
 async function globalTeardown() {
+  const prisma = new PrismaClient();
   try {
     console.log("Cleaning up test database...");
     // Delete all test data from the database
@@ -8,9 +9,10 @@ async function globalTeardown() {
     await prisma.user.deleteMany();
     await prisma.appointment.deleteMany();
     await prisma.hours.deleteMany();
+    console.log("Cleaning complete")
   }catch (error) {
     console.error("Error cleaning up test database:", error);
   }
 }
 
-export default globalTeardown;
+globalTeardown();

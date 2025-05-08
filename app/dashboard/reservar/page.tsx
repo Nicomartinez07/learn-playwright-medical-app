@@ -283,14 +283,16 @@ export default function ReservarTurnoPage() {
                       <SelectContent>
                         {timeSlots.length > 0 ? (
                           timeSlots.map((timeSlot) => (
-                            <SelectItem key={timeSlot} value={timeSlot}>
-                              {timeSlot}
+                            <SelectItem key={timeSlot.hours} value={timeSlot.hours}>
+                              {timeSlot.hours}
                             </SelectItem>
+
                           ))
                         ) : (
-                          <SelectItem value="no-slots" disabled>
-                            No hay horarios disponibles
-                          </SelectItem>
+                          <SelectItem key="no-slots" value="no-slots" disabled>
+                          No hay horarios disponibles
+                        </SelectItem>
+
                         )}
                       </SelectContent>
                     </Select>
