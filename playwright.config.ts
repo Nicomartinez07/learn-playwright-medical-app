@@ -38,14 +38,14 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // { name: 'chromium' },
-    { name: 'firefox', use: { headless: false } },
+   { name: 'chromium' },
+    //{ name: 'firefox', use: { headless: false } },
     // { name: 'webkit', use: { headless: false } }, // Deshabilitar si no es necesario
   ],
   webServer: {
     command: 'npm run dev',
     port: 3000,
-    timeout: 120 * 1000, // Tiempo máximo de espera
+    timeout: 1000 * 1000, // Tiempo máximo de espera
     reuseExistingServer: !process.env.CI,
   },
 });
