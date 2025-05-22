@@ -45,7 +45,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     port: 3000,
-    timeout: 1000 * 1000, // Tiempo máximo de espera
+    timeout: 1000 * 10000, // Tiempo máximo de espera
     reuseExistingServer: !process.env.CI,
   },
 });
